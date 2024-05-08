@@ -18,10 +18,22 @@ mongoose.connect("mongodb+srv://ozce2300:oAfqRLoW5sUpOUl9@arbets.kqv3qks.mongodb
 
 // Skapa ett db-schema
 const newSchema = mongoose.Schema({
-    companyName: String,
-    jobtitle: String,
-    location: String,
-    description: String
+    companyName: {
+        type: String,
+        required : true
+    },
+    jobtitle: {
+        type: String,
+        required : true
+    },
+    location: {
+        type: String,
+        required : true
+    },
+    description: {
+        type: String,
+        required : true
+    }
 });
 
 // Skapa en model
@@ -61,15 +73,35 @@ getCv();
 
 //route
 
-  //Hämta cv
-  app.get("/cv", (req, res) => {
+//Hämta cv
+app.get("/cvs", async (req, res) => {
+    try {
+        let result = await cv.find({})
+
+        return res.json(result)
+    }
+    catch (error) {
+        return res.status(500).json(error)
+
+    }
+
 
 });
 
 //Posta cv
-app.post("/cv", (req, res) => {
+app.post("/cvs", async (req, res) => {
 
-    let companyname = req.body.companyname 
+    try {
+        let result = await cv.create(req.body)
+
+        return res.json(result)
+    }
+    catch (error) {
+        return res.status(400).json(error)
+
+    }
+
+    let companyname = req.body.companyname
     let jobtitle = req.body.jobtitle
     let location = req.body.location
     let description = req.body.description
@@ -79,7 +111,7 @@ app.post("/cv", (req, res) => {
 app.put("/cv/:id", (req, res) => {
     const id = req.params.id;
 
-    let companyname = req.body.companyname 
+    let companyname = req.body.companyname
     let jobtitle = req.body.jobtitle
     let location = req.body.location
     let description = req.body.description
