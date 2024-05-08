@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://ozce2300:oAfqRLoW5sUpOUl9@arbets.kqv3qks.mongodb
 
 // Skapa ett db-schema
 const newSchema = mongoose.Schema({
-    companyName: {
+    companyname: {
         type: String,
         required : true
     },
@@ -39,39 +39,7 @@ const newSchema = mongoose.Schema({
 // Skapa en model
 const cv = mongoose.model('cv', newSchema)
 
-// Skapa en ny kurs
-async function createCv() {
-    //objekt som representerar kurs
-    let cv1 = {
-        companyName: "Volvo",
-        jobtitle: "Produktionsledare",
-        location: "Göteborg",
-        description: "Ledare för montörer"
-    };
-
-    try {
-        await cv.create(cv1);
-    } catch (error) {
-        return "There was an error: " + error;
-    }
-}
-
-// Läs ut från databasen
-async function getCv() {
-    try {
-        let result = await cv.find();
-
-        console.log(result);
-    } catch (error) {
-        return "There was an error: " + error;
-    }
-}
-
-// köra metoder
-createCv();
-getCv();
-
-//route
+//routes
 
 //Hämta cv
 app.get("/cvs", async (req, res) => {
@@ -122,7 +90,6 @@ app.delete("/cv/:id", (req, res) => {
     const id = req.params.id;
 
 });
-
 
 //Lyssna
 app.listen(port, () => {
