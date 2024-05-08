@@ -58,3 +58,41 @@ async function getCv() {
 // köra metoder
 createCv();
 getCv();
+
+//route
+
+  //Hämta cv
+  app.get("/cv", (req, res) => {
+
+});
+
+//Posta cv
+app.post("/cv", (req, res) => {
+
+    let companyname = req.body.companyname 
+    let jobtitle = req.body.jobtitle
+    let location = req.body.location
+    let description = req.body.description
+});
+
+// Uppdatera ett CV
+app.put("/cv/:id", (req, res) => {
+    const id = req.params.id;
+
+    let companyname = req.body.companyname 
+    let jobtitle = req.body.jobtitle
+    let location = req.body.location
+    let description = req.body.description
+});
+
+// Ta bort ett CV
+app.delete("/cv/:id", (req, res) => {
+    const id = req.params.id;
+
+});
+
+
+//Lyssna
+app.listen(port, () => {
+    console.log("Server is running on port: " + port)
+})
