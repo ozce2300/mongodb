@@ -1,9 +1,16 @@
-const express = require("express")
-const cors = require("cors")
+const express = require("express");
+const cors = require("cors");
 
+const app = express();
+const port = 3000
+// Init Express
 
+app.use(cors());
+app.use(express.json());
+
+//Connect to MongoDB
 const mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/FO").then(() => {
+mongoose.connect("mongodb+srv://ozce2300:oAfqRLoW5sUpOUl9@arbets.kqv3qks.mongodb.net/?retryWrites=true&w=majority&appName=Arbets").then(() => {
     console.log("Connected to MongoDB");
 }).catch((error) => {
     console.log("Error connecting to database: " + error);
@@ -32,7 +39,7 @@ async function createCv() {
 
     try {
         await cv.create(cv1);
-    } catch(error) {
+    } catch (error) {
         return "There was an error: " + error;
     }
 }
