@@ -68,28 +68,34 @@ app.post("/cvs", async (req, res) => {
         return res.status(400).json(error)
 
     }
-
-    let companyname = req.body.companyname
-    let jobtitle = req.body.jobtitle
-    let location = req.body.location
-    let description = req.body.description
 });
 
-// Uppdatera ett CV
-app.put("/cv/:id", (req, res) => {
-    const id = req.params.id;
-
-    let companyname = req.body.companyname
-    let jobtitle = req.body.jobtitle
-    let location = req.body.location
-    let description = req.body.description
+// Uppdatera CV
+app.put("/cvs/:id", async (req, res) => {
+    try {
+        const updatedCv = await cv.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedCv) {
+            return res.status(404).json({ message: "CV hittades inte" });
+        }
+        return res.json(updatedCv);
+    } catch (error) {
+        return res.status(400).json(error);
+    }
 });
 
-// Ta bort ett CV
-app.delete("/cv/:id", (req, res) => {
-    const id = req.params.id;
-
+// Ta bort CV
+app.delete("/cvs/:id", async (req, res) => {
+    try {
+        const deletedCv = await cv.findByIdAndDelete(req.params.id);
+        if (!deletedCv) {
+            return res.status(404).json({ message: "CV hittades inte" });
+        }
+        return res.json({ message: "CV borttagen" });
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 });
+
 
 //Lyssna
 app.listen(port, () => {
